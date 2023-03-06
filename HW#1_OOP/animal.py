@@ -39,6 +39,7 @@ class Mouse(Animal):
         return "pi pi pi"
 
 if __name__ == "__main__":
+
     dog = Dog(False,"REX", 50, 0.5)
     print(dog.info())
 

@@ -1,5 +1,6 @@
 from animal import Animal
 
+
 class Human(Animal):
 
     def info(self):
@@ -18,8 +19,10 @@ class Centaur(Human):
         return "I can jump over the mountain!"
 
 
-centaur_object = Centaur(True, "Alpha", 100, 200)
-print(centaur_object.info())
-print(centaur_object.sleep())
-print(centaur_object.jump_over())
-print(centaur_object.work())
+if __name__ == "__main__":
+    centaur_object = Centaur(True, "Alpha", 100, 200)
+    print(centaur_object.info())
+    print(centaur_object.sleep())
+    print(centaur_object.jump_over())
+    print(centaur_object.work())
+    print(centaur_object.is_wild)
