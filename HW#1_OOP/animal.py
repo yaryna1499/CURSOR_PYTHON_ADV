@@ -1,8 +1,9 @@
 class Animal:
-    def __init__(self, is_wild: bool, weight, height):
+    def __init__(self, is_wild: bool, name, weight, height):
         self.weight = weight
         self.is_wild = is_wild
         self.height = height
+        self.name = name
 
     def info(self):
         if self.is_wild:
@@ -37,17 +38,19 @@ class Mouse(Animal):
     def say_pi(self):
         return "pi pi pi"
 
-dog_Rex = Dog(False, 50, 0.5)
-print(dog_Rex.info())
+if __name__ == "__main__":
+    dog = Dog(False,"REX", 50, 0.5)
+    print(dog.info())
 
-cat_Murchyk = Cat(False, 1, 0.2)
-print(cat_Murchyk.say_meow())
+    cat = Cat(False, "Murchyk", 1, 0.2)
+    print(cat.say_meow())
+    print(cat.name)
 
-tiger = Tiger(True, 100, 1)
-print(tiger.eat())
+    tiger = Tiger(True, "Tiger",100, 1)
+    print(tiger.eat())
 
-frog = Frog(True, 0.2, 0.04)
-print(frog.say_kwa())
+    frog = Frog(True, "Froggy", 0.2, 0.04)
+    print(frog.say_kwa())
 
-mouse = Mouse(True, 0.3, 0.3)
-print(mouse.sleep())
+    mouse = Mouse(True, "Mouse", 0.3, 0.3)
+    print(mouse.sleep())
