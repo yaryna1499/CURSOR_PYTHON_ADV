@@ -2,27 +2,32 @@ from animal import Animal
 
 
 class Human(Animal):
+    def __init__(self, name, is_wild, weight, height):
+        super().__init__(is_wild, weight, height)
+        self.name = name
 
     def info(self):
-        return f"My name is {self.name}. I`m {self.height} cm tall and weigh {self.weight} kg."
+        print(f"My name is {self.name}. I`m {self.height} cm tall and weigh {self.weight} kg.")
 
     def study(self):
-        return "I`m studying."
+        print("I`m studying.")
 
     def work(self):
-        return "I`m working."
+        print("I`m working.")
 
 
 class Centaur(Human):
+    def __init__(self, name, is_wild, weight, height):
+        super().__init__(name, is_wild, weight, height)
 
     def jump_over(self):
-        return "I can jump over the mountain!"
+        print("I can jump over the mountain!")
 
 
 if __name__ == "__main__":
-    centaur_object = Centaur(True, "Alpha", 100, 200)
-    print(centaur_object.info())
-    print(centaur_object.sleep())
-    print(centaur_object.jump_over())
-    print(centaur_object.work())
+    centaur_object = Centaur("Alpha", True, 100, 200)
+    centaur_object.info()
+    centaur_object.sleep()
+    centaur_object.jump_over()
+    centaur_object.work()
     print(centaur_object.is_wild)
