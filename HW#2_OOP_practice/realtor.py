@@ -30,9 +30,4 @@ class Realtor:
 
     @staticmethod
     def steal_money():
-        p = 0.1
-        if randint(0, 1) >= p:
-            print("I have stolen your money!")
-        else:
-            print("I did not steal your money!")
-
+        print("I have stolen your money!")

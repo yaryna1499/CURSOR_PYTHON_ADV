@@ -20,12 +20,11 @@ class Person:
         self.money += amount
         return self.money
 
-    @staticmethod
-    def buy_house(my_choice=int(input("Please, choose the number of the house - "))):
-        try:
-            for h in realtor.houses:
-                if realtor.houses.index(h) == my_choice:
-                    print(f'You bought a house with area {h.area} sq. km. and it costs {h.cost}$')
-                    realtor.houses.remove(h)
-        finally:
-            print("Please, choose from available houses!")
+    def buy_house(self, my_choice=int(input("Please, choose the number of the house - "))):
+        for h in realtor.houses:
+            if realtor.houses.index(h) == my_choice and self.money >= h.cost:
+                print(f'You bought a house with area {h.area} sq. km. and it costs {h.cost}$')
+                realtor.houses.remove(h)
+                self.money -= h.cost
+            else:
+                print("Please, choose from available houses or make money!")
