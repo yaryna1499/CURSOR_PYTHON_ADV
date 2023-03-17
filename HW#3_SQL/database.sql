@@ -23,9 +23,10 @@ DROP TABLE IF EXISTS `countries`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `countries` (
-  `code` int DEFAULT NULL,
+  `code` int NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `continent_name` varchar(255) DEFAULT NULL
+  `continent_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -51,7 +52,11 @@ CREATE TABLE `merchants` (
   `admin_id` int DEFAULT NULL,
   `country_code` int DEFAULT NULL,
   `created_at` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK_admin_id` (`admin_id`),
+  KEY `FK_code` (`country_code`),
+  CONSTRAINT `FK_admin_id` FOREIGN KEY (`admin_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `FK_code` FOREIGN KEY (`country_code`) REFERENCES `countries` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -74,7 +79,11 @@ DROP TABLE IF EXISTS `order_items`;
 CREATE TABLE `order_items` (
   `order_id` int DEFAULT NULL,
   `product_id` int DEFAULT NULL,
-  `quantity` int DEFAULT NULL
+  `quantity` int DEFAULT NULL,
+  KEY `FK_order_id` (`order_id`),
+  KEY `FK_product_id` (`product_id`),
+  CONSTRAINT `FK_order_id` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`),
+  CONSTRAINT `FK_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -99,7 +108,9 @@ CREATE TABLE `orders` (
   `user_id` int DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `created_at` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK_user_id` (`user_id`),
+  CONSTRAINT `FK_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -126,7 +137,9 @@ CREATE TABLE `products` (
   `price` int DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `created_at` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK_merchant_id` (`merchant_id`),
+  CONSTRAINT `FK_merchant_id` FOREIGN KEY (`merchant_id`) REFERENCES `merchants` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -154,7 +167,9 @@ CREATE TABLE `users` (
   `date_of_birth` varchar(255) DEFAULT NULL,
   `country_code` int DEFAULT NULL,
   `created_at` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `FK_country_code` (`country_code`),
+  CONSTRAINT `FK_country_code` FOREIGN KEY (`country_code`) REFERENCES `countries` (`code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -176,4 +191,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-15  8:32:26
+-- Dump completed on 2023-03-17  2:32:21
