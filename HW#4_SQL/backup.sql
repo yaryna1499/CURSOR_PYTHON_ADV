@@ -1,0 +1,222 @@
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
+--
+-- Host: localhost    Database: Employees
+-- ------------------------------------------------------
+-- Server version	8.0.32-0ubuntu0.22.04.2
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `COUNTRIES`
+--
+
+DROP TABLE IF EXISTS `COUNTRIES`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `COUNTRIES` (
+  `COUNTRY_ID` int NOT NULL AUTO_INCREMENT,
+  `COUNTRY_NAME` char(255) DEFAULT NULL,
+  `REGION_ID` int DEFAULT NULL,
+  PRIMARY KEY (`COUNTRY_ID`),
+  KEY `REGION_ID_cons` (`REGION_ID`),
+  CONSTRAINT `REGION_ID_cons` FOREIGN KEY (`REGION_ID`) REFERENCES `REGIONS` (`REGION_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `COUNTRIES`
+--
+
+LOCK TABLES `COUNTRIES` WRITE;
+/*!40000 ALTER TABLE `COUNTRIES` DISABLE KEYS */;
+INSERT INTO `COUNTRIES` VALUES (1,'Ukraine',1),(2,'Poland',1),(3,'Belarus',2),(4,'Switzerland',4);
+/*!40000 ALTER TABLE `COUNTRIES` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `DEPARTMENTS`
+--
+
+DROP TABLE IF EXISTS `DEPARTMENTS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `DEPARTMENTS` (
+  `DEPARTMENT_ID` int NOT NULL AUTO_INCREMENT,
+  `DEPARTMENT_NAME` char(255) DEFAULT NULL,
+  `MANAGER_ID` int DEFAULT NULL,
+  `LOCATION_ID` int DEFAULT NULL,
+  PRIMARY KEY (`DEPARTMENT_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `DEPARTMENTS`
+--
+
+LOCK TABLES `DEPARTMENTS` WRITE;
+/*!40000 ALTER TABLE `DEPARTMENTS` DISABLE KEYS */;
+INSERT INTO `DEPARTMENTS` VALUES (1,'dep1',20,1),(2,'dep1',10,2);
+/*!40000 ALTER TABLE `DEPARTMENTS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `EMPLOYEES`
+--
+
+DROP TABLE IF EXISTS `EMPLOYEES`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `EMPLOYEES` (
+  `EMPLOYEE_ID` int NOT NULL AUTO_INCREMENT,
+  `FIRST_NAME` varchar(255) DEFAULT NULL,
+  `LAST_NAME` varchar(255) DEFAULT NULL,
+  `EMAIL` varchar(255) DEFAULT NULL,
+  `PHONE_NUMBER` char(10) DEFAULT NULL,
+  `HIRE_DATE` date DEFAULT NULL,
+  `JOB_ID` int DEFAULT NULL,
+  `SALARY` float DEFAULT NULL,
+  `COMISSION_PCT` float DEFAULT NULL,
+  `MANAGER_ID` int DEFAULT NULL,
+  `DEPARTMENT_ID` int DEFAULT NULL,
+  PRIMARY KEY (`EMPLOYEE_ID`),
+  UNIQUE KEY `MANAGER_ID` (`MANAGER_ID`),
+  KEY `JOB_ID_cons` (`JOB_ID`),
+  CONSTRAINT `JOB_ID_cons` FOREIGN KEY (`JOB_ID`) REFERENCES `JOBS` (`JOB_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `EMPLOYEES`
+--
+
+LOCK TABLES `EMPLOYEES` WRITE;
+/*!40000 ALTER TABLE `EMPLOYEES` DISABLE KEYS */;
+INSERT INTO `EMPLOYEES` VALUES (1,'Test','Test_last','test@gmail.com','3809912345','2008-01-02',3,1000,100,20,1),(3,'Test2','Test_last2','test2@gmail.com','00000000','2022-01-06',3,1000,20,NULL,1);
+/*!40000 ALTER TABLE `EMPLOYEES` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `JOBS`
+--
+
+DROP TABLE IF EXISTS `JOBS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `JOBS` (
+  `JOB_ID` int NOT NULL AUTO_INCREMENT,
+  `JOB_TITLE` varchar(255) DEFAULT NULL,
+  `MIN_SALARY` float DEFAULT NULL,
+  `MAX_SALARY` float DEFAULT NULL,
+  PRIMARY KEY (`JOB_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `JOBS`
+--
+
+LOCK TABLES `JOBS` WRITE;
+/*!40000 ALTER TABLE `JOBS` DISABLE KEYS */;
+INSERT INTO `JOBS` VALUES (1,'developer',600,2000),(2,'manager',500,1000),(3,'DB admin',700,3000),(4,'QA',400,1500);
+/*!40000 ALTER TABLE `JOBS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `JOB_HISTORY`
+--
+
+DROP TABLE IF EXISTS `JOB_HISTORY`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `JOB_HISTORY` (
+  `EMPLOYEE_ID` int NOT NULL AUTO_INCREMENT,
+  `START_DATE` date NOT NULL,
+  `END_DATE` date DEFAULT NULL,
+  `JOB_ID` int DEFAULT NULL,
+  `DEPARTMENT_ID` int DEFAULT NULL,
+  PRIMARY KEY (`EMPLOYEE_ID`,`START_DATE`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `JOB_HISTORY`
+--
+
+LOCK TABLES `JOB_HISTORY` WRITE;
+/*!40000 ALTER TABLE `JOB_HISTORY` DISABLE KEYS */;
+/*!40000 ALTER TABLE `JOB_HISTORY` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `LOCATIONS`
+--
+
+DROP TABLE IF EXISTS `LOCATIONS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `LOCATIONS` (
+  `LOCATION_ID` int NOT NULL AUTO_INCREMENT,
+  `STREET_ADDRESS` varchar(255) DEFAULT NULL,
+  `POSTAL_CODE` int DEFAULT NULL,
+  `CITY` char(255) DEFAULT NULL,
+  `STATE_PROVINCE` varchar(255) DEFAULT NULL,
+  `COUNTRY_ID` int DEFAULT NULL,
+  PRIMARY KEY (`LOCATION_ID`),
+  KEY `COUNTRY_ID_cons` (`COUNTRY_ID`),
+  CONSTRAINT `COUNTRY_ID_cons` FOREIGN KEY (`COUNTRY_ID`) REFERENCES `COUNTRIES` (`COUNTRY_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LOCATIONS`
+--
+
+LOCK TABLES `LOCATIONS` WRITE;
+/*!40000 ALTER TABLE `LOCATIONS` DISABLE KEYS */;
+INSERT INTO `LOCATIONS` VALUES (1,'street1',1234567,'Ternopil','T',1),(2,'street2',720000,'Lviv','Lv',1),(3,'street3',0,'Krakow','K',2),(4,'street4',40919494,'Minsk','M',3),(5,'street5',1234568990,'Harkiv','H',1);
+/*!40000 ALTER TABLE `LOCATIONS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `REGIONS`
+--
+
+DROP TABLE IF EXISTS `REGIONS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `REGIONS` (
+  `REGION_ID` int NOT NULL AUTO_INCREMENT,
+  `REGION_NAME` char(255) DEFAULT NULL,
+  PRIMARY KEY (`REGION_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `REGIONS`
+--
+
+LOCK TABLES `REGIONS` WRITE;
+/*!40000 ALTER TABLE `REGIONS` DISABLE KEYS */;
+INSERT INTO `REGIONS` VALUES (1,'Eastern Europe'),(2,'Southern Europe'),(3,'Northern Europe'),(4,'Western Europe');
+/*!40000 ALTER TABLE `REGIONS` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-03-21 23:46:19
