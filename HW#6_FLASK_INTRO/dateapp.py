@@ -1,5 +1,6 @@
 from flask import Flask, abort
 from datetime import datetime
+import pytz
 from pytz import timezone
 
 app = Flask(__name__)
@@ -14,6 +15,7 @@ def date_time_printer(zone):
     Also available timezones:
     0: Greenwich,
     +2: GMT+2
+    Extended option(just type +hour): GMT-12:00 to GMT+14:00
     """
     app.logger.info(f"The chosen param is {zone}")
     params = {
@@ -21,8 +23,10 @@ def date_time_printer(zone):
         "+2": "Etc/GMT-2",
         None: "Europe/Kiev",
     }
-    response_message = f"<h1>{datetime.now(tz=timezone(params[zone])).strftime('%Y-%m-%d %H:%M:%S %Z%z')}</h1>"
-    if zone not in params:
+    params[zone] = f"Etc/GMT{zone}" if zone not in params else params[zone]
+    try:
+        response_message = f"<h1>{datetime.now(tz=timezone(params[zone])).strftime('%Y-%m-%d %H:%M:%S %Z%z')}</h1>"
+    except pytz.UnknownTimeZoneError:
         abort(406, "Timezone is wrong!")
     else:
         return response_message
