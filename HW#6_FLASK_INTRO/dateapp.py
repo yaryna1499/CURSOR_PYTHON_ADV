@@ -23,6 +23,7 @@ def date_time_printer(zone):
         "+2": "Etc/GMT-2",
         None: "Europe/Kiev",
     }
+    zone = zone.replace("-", "+") if "-" in zone else zone.replace("+", "-")
     params[zone] = f"Etc/GMT{zone}" if zone not in params else params[zone]
     try:
         response_message = f"<h1>{datetime.now(tz=timezone(params[zone])).strftime('%Y-%m-%d %H:%M:%S %Z%z')}</h1>"
