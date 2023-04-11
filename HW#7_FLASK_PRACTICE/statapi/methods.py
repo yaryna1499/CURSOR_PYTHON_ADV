@@ -41,15 +41,15 @@ formatters = {
 
 
 def method_api(method, format="json", **kwargs):
+    global res, mime
     """Call method, parse result and format it accordingly."""
-
     # TODO: add args handling
-    if format not in formatters:
-        raise KeyError("Wrong format, try other!")
+    if format.lower() not in formatters:
+        raise KeyError("Format does not exist.")
 
     spec = method(**kwargs)
-    parsed = _parse_spec(spec)  # convert to Python native structures
 
+    parsed = _parse_spec(spec)  # convert to Python native structures
     mime, func = formatters[format]
     res = func(parsed)
 
@@ -94,5 +94,5 @@ if __name__ == "__main__":
     res = _parse_spec(spec)
 
     mtd = methods["cpu_count"]
-    res, mime = mtd(format="toml", logical=False)
+    res, mime = mtd(logical=False)
     print(f"Res:\n{res}")
