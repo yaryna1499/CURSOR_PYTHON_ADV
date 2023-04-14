@@ -8,6 +8,4 @@ def to_bool(value):
     elif value.lower() in {'false', 'no', 'off', '0'}:
         # If the value is a string representing a "false" value, return False
         return False
-    else:
-        # If the value is not a boolean or a string representing a boolean value, raise an error
-        raise ValueError("Invalid boolean value: {}".format(value))
+    return ValueError("Invalid boolean value: {}".format(value))
