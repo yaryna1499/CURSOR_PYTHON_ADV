@@ -1,19 +1,18 @@
 import functools
-import json
 from enum import Enum
+
 import psutil as ps
-import toml
-import yaml
+import json, toml, yaml
 
 # (!) Note: depends on PIP packages: psultil toml pyyaml
 
 
-# __all__ = ('methods')
+__all__ = ('methods')
 
 def _parse_spec(spec):
     """Convert library-internal data structures.
     
-    Conversion is done into general Python types.
+    Conversion is done intogeneral Python types.
     """
 
     if hasattr(spec, '_asdict'):

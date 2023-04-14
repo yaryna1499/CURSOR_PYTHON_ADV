@@ -35,8 +35,6 @@ def memory():
 #       - with js dynamically updating its data
 # TODO(extra): try extracting common template values into jinja block in separate file
 #       and use template inheritance
-
-
 @app.route('/memory-client')
 def memory_client():
     ...
