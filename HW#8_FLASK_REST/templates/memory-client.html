@@ -11,11 +11,39 @@
   <!-- <link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
 </head>
 <body>
-  <h1>Memory Stats:</h1>
-  <span>Available memory: MEM_FREE / MEM_TOTAL MiB</span>
-  <div class="pbar" id="mem">
-    <!-- use js to fill it on client-side -->
-  </div> 
-  <script src="/assets/script.js"></script>
+<h1>{{ statname | title }} Stats:</h1>
+  <span>Available memory: {{ '{:.2f}'.format(mem['free'] / (1024 ** 2)) }} / {{ '%.2f' | format(mem['total'] / (1024 ** 2)) }} MiB</span>
+    <div class="progress-bar">
+      <div class="progress"></div>
+      <div class="percentage">0%</div>
+    </div>
+<script src="{{ url_for('assets.static', filename='script.js') }}"></script>
+
+  <style>
+    .percentage {
+      position: absolute;
+      left: 50%;
+      right: 50%;
+      z-index: 2;
+      color: black;
+      top: 10px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 40px;
+      background-color: #f2f2f2;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress {
+      height: 100%;
+      background-color: #007bff;
+      width: 0;
+      transition: all ease-in-out 0.5s;
+    }
+  </style>
 </body>
 </html>

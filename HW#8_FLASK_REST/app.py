@@ -13,19 +13,20 @@ app = Flask(__name__)
 #     for simple projects, development and testing purposes
 # (!) Flask adds default /static route to serve files from 'static' dir
 # Custom folder for assets (also normally must be served by web server)
-assets = Blueprint('assets', __name__, static_folder='assets')
-app.register_blueprint(assets, url_prefix='/')
+assets = Blueprint("assets", __name__, static_folder="assets")
+app.register_blueprint(assets, url_prefix="/")
 
 
-@app.route('/memory')
-def memory():
-    mem = methods['virtual_memory'](format=None)
-    app.logger.debug('Got memory data:\n\t %r', mem)
-    return render_template('memory.html.jinja',
-                           pagetitle='Memory statistics',
-                           statname='memory',
-                           mem=mem
-                           )
+# @app.route('/memory')
+# def memory():
+#     mem = methods['virtual_memory'](format=None)
+#     app.logger.debug('Got memory data:\n\t %r', mem)
+#     return render_template('memory.html.jinja',
+#                            pagetitle='Memory statistics',
+#                            statname='memory',
+#                            mem=mem
+#                            )
+
 
 # TODO: add a template rendering route where progressbar gets filled
 #       on client-side, with requests done using js fetch() method.
@@ -35,31 +36,43 @@ def memory():
 #       - with js dynamically updating its data
 # TODO(extra): try extracting common template values into jinja block in separate file
 #       and use template inheritance
-@app.route('/memory-client')
+@app.route("/memory-client")
 def memory_client():
-    ...
-    # add logic here
-    ...
-    return render_template('memory-client.html')
+    mem = methods["virtual_memory"](format=None)
+    app.logger.debug("Got memory data:\n\t %r", mem)
+    return render_template(
+        "memory-client.html",
+        pagetitle="Memory statistics dynamic rendering",
+        statname="memory-client",
+        mem=mem,
+    )
 
 
+@app.route("/get_value", methods=["GET"])
+def get_value():
+    # for _ in range(0, 100):
+    #     perc = methods['virtual_memory'](format=None)['percent']
+    #     yield str(perc)
+    perc = methods["virtual_memory"](format=None)["percent"]
+    return str(perc)
 
-@app.route('/stats/')
+
+@app.route("/stats/")
 @lru_cache(maxsize=1)  # can use cuz no flask proxies refered
 def stats_root():
     """List all methods."""
-    ret = {'methods': list(methods)}
+    ret = {"methods": list(methods)}
     return ret  # auto-converted to json by flask
 
 
-@app.route('/stats/<string:method>', methods=['GET'])
+@app.route("/stats/<string:method>", methods=["GET"])
 def stats(method):
-    format = request.args.get('format')
+    format = request.args.get("format")
 
     try:
         func = methods[method]
     except KeyError:
-        abort(404, f'Method {method} not found')
+        abort(404, f"Method {method} not found")
 
     try:
         # format is set on a statapi module level defaults
@@ -73,13 +86,14 @@ def stats(method):
     return Response(res, mimetype=mime)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # We need to set logging to be able to see everything
     import logging
+
     app.logger.setLevel(logging.DEBUG)
 
     # (!) Never run your app on '0.0.0.0 unless you're deploying
     #     to production, in which case a proper WSGI application
     #     server and a reverse-proxy is needed
     #     0.0.0.0 means "run on all interfaces" -- insecure
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host="127.0.0.1", port=8000, debug=True)
