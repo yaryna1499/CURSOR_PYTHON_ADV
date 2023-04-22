@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CAT OF THE DAY</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
+</head>
+
+<body>
+    <div>
+      <h1>{{message}}</h1>
+      <a href="static/images/cats/catoftheday.jpg">Try Cat of the Day</a>
+      <p>Here u can see beautiful picture:</p>
+      <img src="static/images/user_result_images/{{image}}" alt="your picture" width="100%">
+      <p>{{image}}</p>
+    </div>
+  </body>
+
+</html>

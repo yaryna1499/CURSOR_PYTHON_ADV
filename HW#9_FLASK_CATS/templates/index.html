@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CAT OF THE DAY</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/css/style.css') }}">
+</head>
+
+<body>
+    <div>
+      <h1>Welcome to the CAT OF THE DAY!</h1>
+      <a href="/cats/catoftheday.jpg">Try Cat of the Day</a>
+      <p>Here u can see beautiful picture:</p>
+      <img src="/cats/catoftheday.jpg" alt="catoftheday">
+  
+  
+  
+        <form method="POST" enctype="multipart/form-data" action="{{url_for('upload_file')}}">
+        <label>Text for your own picture:</label>
+        <textarea type="text" name="user_text" rows="1" cols="15"></textarea>
+        <br>
+        <input type="file" name="file" value="{{url_for('upload_file')}}">
+        <button type="submit">Make picture</button>
+        </form>
+  
+    </div>
+  </body>
+
+</html>

@@ -25,8 +25,10 @@ def _get_cats(catdir=CATDIR):
     # and are resolved relative to it
 
     catdir = _PROJDIR.joinpath(pth.Path(catdir))
+    log.info(catdir)
     assert catdir.is_relative_to(_PROJDIR)
     cats = tuple(catdir.iterdir())
+    log.info(cats)
     return cats
 
 # collect all cat images under supplied directory
@@ -35,8 +37,7 @@ CATS = _get_cats(CATDIR)
 # Put some info into log
 log.info('Cats directory set to: %s', CATDIR)
 if log.isEnabledFor(logging.INFO):
-    log.info('Collected %s cat images:\n\t%s',
-              len(CATS), '\n\t'.join(CATS))
+    log.info('Collected %s cat images', len(CATS))
 
 
 def find_cat_file(numext, try_random=False):
