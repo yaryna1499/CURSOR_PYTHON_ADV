@@ -13,7 +13,7 @@ log.info('Using font %s as default', DEFAULT_FONT)
 class TextCut:
     def __init__(self, fontname=DEFAULT_FONT):
         self._basic_font = ImageFont.truetype(fontname, size=100)
-        self._dummy_draw = ImageDraw.ImageDraw(Image.new('RGBA', (1, 1)))
+        self._dummy_draw = ImageDraw.ImageDraw(Image.new('RGB', (1, 1)))
 
 
     def fit_font_variant(self, width, height, text, *args, 
@@ -61,7 +61,7 @@ class TextCut:
         draw.multiline_text(center, *args,
                             align=align, anchor='mm', text=text, font=font,
                             fill=(0, 0, 0, 255), **kwargs)
-        bg = Image.new('RGBA', image.size, bgcolor)
+        bg = Image.new('RGB', image.size, bgcolor)
         res = Image.composite(image, bg, mask)
         #res = res.convert(image.mode)
         return res
