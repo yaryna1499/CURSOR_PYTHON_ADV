@@ -4,10 +4,10 @@ from datetime import datetime
 class User(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(255), unique=True)
-    password = db.Column(db.String(255), nullable=False)
-    first_name = db.Column(db.String(255), nullable=True)
-    last_name = db.Column(db.String(255), nullable=True)
+    email = db.Column(db.String(50), unique=True)
+    password = db.Column(db.String(50), nullable=False)
+    first_name = db.Column(db.String(50), nullable=True)
+    last_name = db.Column(db.String(50), nullable=True)
 
     posts = db.relationship("Post", backref="user")
 

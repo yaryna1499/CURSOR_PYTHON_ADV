@@ -1,12 +1,17 @@
 import hashlib
 from app import app, db
 from flask import render_template, request, redirect, session
-from models import User
+from models import User, Post
+
 
 
 @app.route("/")
 def hello_world():
-    return render_template("index.html")
+    posts = db.session.query(Post).all()
+    posts = [post.serialize for post in posts]
+    users_with_posts = db.session.query(User).join(User.posts).all()
+    users_with_posts = [user.serialize for user in users_with_posts]
+    return render_template("index.html", posts=posts, users=users_with_posts)
 
 
 @app.route("/sign-up")
@@ -51,13 +56,3 @@ def logout():
     return redirect("/")
 
 
-@app.route("/create_post")
-def create_post():
-    if session["user"]:
-        return render_template("post.html")
-    else:
-        return "Please, sign in!"
-
-
-def save_post():
-    pass
