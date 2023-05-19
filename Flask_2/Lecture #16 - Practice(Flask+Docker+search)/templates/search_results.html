@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Search results:</h1>
+<a href="{{ url_for('hello_world') }}" class="btn btn-primary">Go back</a>
+<ul>
+    {% for post in results %}
+      <li>
+        <h2 style="color:blue;text-decoration:underline;">{{ post.post_header }}</h2>
+        <p>{{ post.post_text }}</p>
+        {% for user in users %}
+        {% if user.id == post.user_id %}
+        <h6 style="color:brown;text-decoration:underline;">{{user.first_name}} {{user.last_name}}</h6>
+        {% if session['user'] and session['user'].id == user.id %}
+        <a href="{{url_for('edit_post', post_id=post.post_id)}}"><button type="button" class="btn btn-primary">Edit Post</button></a>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+      </li>
+    {% endfor %}
+</ul>
+{% endblock %}
