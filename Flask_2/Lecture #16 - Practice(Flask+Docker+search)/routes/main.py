@@ -7,11 +7,7 @@ from models import User, Post
 
 @app.route("/")
 def hello_world():
-    posts = db.session.query(Post).all()
-    posts = [post.serialize for post in posts]
-    users_with_posts = db.session.query(User).join(User.posts).all()
-    users_with_posts = [user.serialize for user in users_with_posts]
-    return render_template("index.html", posts=posts, users=users_with_posts)
+    return render_template("index.html")
 
 
 @app.route("/sign-up")
@@ -31,8 +27,7 @@ def register():
     )
     db.session.add(user)
     db.session.commit()
-    session["user"] = user.serialize
-    return redirect("/")
+    return redirect("/sign-in")
 
 
 @app.route("/sign-in")
@@ -47,11 +42,15 @@ def authorize():
     if user:
         if hashlib.sha256(data.get("password").encode("utf-8")).hexdigest() == user.password:
             session["user"] = user.serialize
+            ## changes logg_status in the database:
+            user.sign_in(session["user"]["id"])
     return redirect("/")
 
 
 @app.route("/logout")
 def logout():
+    user = User.query.filter(User.id == session["user"]["id"]).first()
+    user.log_out(session["user"]["id"])
     del session["user"]
     return redirect("/")
 

@@ -1,8 +1,69 @@
-.cards {
+.post-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  
+  .post-container {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    margin-bottom: 8px;
+    background-color: #ffffff;
+    margin-bottom: 16px;
+    padding: 16px;
+  }
+  
+  .post-title {
+    color: #202124;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  .post-date {
+    color: #5f6368;
+    font-size: 12px;
+    margin: 4px 0 8px;
+  }
+  
+  .post-text {
+    color: #5f6368;
+    margin: 0;
+  }
+  
+  .post-author {
+    color: #5f6368;
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .button-group {
     display: flex;
-    justify-content: flex-start;
-}
-
-.cards .card {
-    margin-right: 30px;
-}
+    justify-content: flex-end;
+    margin-top: 8px;
+  }
+  
+  .btn {
+    padding: 8px 12px;
+    background-color: #4285f4;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn:hover {
+    background-color: #3367d6;
+  }
+  
+  .edit-button {
+    background-color: #fbbc05;
+    margin-right: 8px;
+  }
+  
+  .delete-button {
+    background-color: #ea4335;
+  }
+  

@@ -57,3 +57,11 @@ def search():
         ).all()
     results = [post.serialize for post in results]
     return render_template('search_results.html', results=results)
+
+
+@app.route("/post/<int:id>/delete")
+def delete_post(id):
+    post = Post.query.get(id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect("/")
