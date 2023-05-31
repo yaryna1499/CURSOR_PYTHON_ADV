@@ -1,0 +1,10 @@
+          <div class="card" style="width: 18rem;">
+            <a href="{% url 'product_page' id=product.id %}">
+                  <img src="/media/{{ product.main_image }}" class="card-img-top" alt="...">
+            </a>
+                  <div class="card-body">
+                    <h5 class="card-title">{{ product.title }}</h5>
+                    <p class="card-text">{{ product.price }}$</p>
+                    <a href="{% url 'add_to_cart' product_id=product.id %}" class="btn btn-primary">Buy</a>
+                  </div>
+                </div>

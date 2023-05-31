@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="product">
+
+    <div id="slider">
+        <div class="slider-images">
+            {% for image in product.all_images %}
+            <div class="slide">
+              <img src="/media/{{ image }}" alt="Product Image">
+            </div>
+            {% endfor %}
+        </div>
+        <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+        <a class="next" onclick="changeSlide(1)">&#10095;</a>
+    </div>
+
+    <h1>{{ product.title }}</h1>
+    <p>{{ product.description }}</p>
+    <p>Price: {{ product.price }}$</p>
+    {% if product.discount_price %}
+        <p>Discounted Price: {{ product.discount_price }}$</p>
+    {% endif %}
+    <button class="buy-button">Buy Now</button>
+</div>
+
+<style>
+#slider {
+    position: relative;
+    width: 30%;
+    overflow: hidden;
+}
+
+.slider-images {
+    display: flex;
+    width: 100d%;
+    transition: transform 0.3s ease-in-out;
+}
+
+.slide img {
+  max-width: 200px;
+  height: auto;
+}
+
+
+.prev,
+.next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+</style>
+
+<script>
+let slideIndex = 0;
+const slides = document.querySelectorAll('.slide');
+
+showSlide(slideIndex);
+
+function changeSlide(n) {
+    showSlide(slideIndex += n);
+}
+
+function showSlide(n) {
+    if (n >= slides.length) {
+        slideIndex = 0;
+    } else if (n < 0) {
+        slideIndex = slides.length - 1;
+    }
+
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+
+    slides[slideIndex].style.display = "block";
+}
+</script>
+
+{% endblock %}
