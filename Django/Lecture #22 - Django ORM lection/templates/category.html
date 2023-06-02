@@ -1,5 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
+
+
+<form action="{% url 'category_page' category.slug %}" method="get">
+    <label for="sort-by">Sort by:</label>
+    <select name="sort_by" id="sort-by">
+      <option value="date_added">Date Added</option>
+      <option value="price">Price</option>
+    </select>
+    <button type="submit">Sort</button>
+</form>
+  
+
+
+
     <div class="container">
         <h1 class="text-center">{{ category.title }}</h1>
         <div class="products-list">

@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q
+from django import utils
 
 
 
@@ -10,6 +11,7 @@ class Product(models.Model):
     discount_price = models.IntegerField(null=True, blank=True)
     show_on_main_page = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    date_added = models.DateTimeField(default=utils.timezone.now)
 
     @property
     def main_image(self):
