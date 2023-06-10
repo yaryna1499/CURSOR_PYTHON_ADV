@@ -3,7 +3,6 @@ from django.db.models import Q
 from django import utils
 
 
-
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
@@ -15,15 +14,17 @@ class Product(models.Model):
 
     @property
     def main_image(self):
-        return ProductImage.objects.filter(Q(product_id=self.id) & Q(is_main=True)).first().image
-    
+        return (
+            ProductImage.objects.filter(Q(product_id=self.id) & Q(is_main=True))
+            .first()
+            .image
+        )
 
     @property
     def all_images(self):
         product_images = ProductImage.objects.filter(product_id=self.id)
         image_list = [product_image.image for product_image in product_images]
         return image_list
-
 
     def __str__(self):
         return str(self.id) + " " + self.title
@@ -35,7 +36,7 @@ class ProductImage(models.Model):
     is_main = models.BooleanField(default=False)
 
     class Meta:
-        unique_together = ('product', 'is_main')
+        unique_together = ("product", "is_main")
 
     def __str__(self):
         return str(self.product.id) + " " + self.product.title + "|" + str(self.id)
@@ -44,7 +45,9 @@ class ProductImage(models.Model):
 class Category(models.Model):
     title = models.CharField(max_length=255)
     slug = models.CharField(max_length=255, unique=True, default="slug")
-    parent = models.ForeignKey("Category", null=True, blank=True, on_delete=models.PROTECT)
+    parent = models.ForeignKey(
+        "Category", null=True, blank=True, on_delete=models.PROTECT
+    )
     products = models.ManyToManyField(Product)
 
     def __str__(self):

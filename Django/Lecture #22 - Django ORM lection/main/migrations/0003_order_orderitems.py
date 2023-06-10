@@ -5,36 +5,64 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('products', '0004_alter_category_parent_and_more'),
-        ('main', '0002_slideritem'),
+        ("products", "0004_alter_category_parent_and_more"),
+        ("main", "0002_slideritem"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Order',
+            name="Order",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=255)),
-                ('last_name', models.CharField(max_length=255)),
-                ('email', models.CharField(max_length=255)),
-                ('address', models.CharField(max_length=255)),
-                ('address2', models.CharField(blank=True, max_length=255, null=True)),
-                ('country', models.CharField(max_length=255)),
-                ('city', models.CharField(max_length=255)),
-                ('postcode', models.CharField(max_length=255)),
-                ('total_price', models.IntegerField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("first_name", models.CharField(max_length=255)),
+                ("last_name", models.CharField(max_length=255)),
+                ("email", models.CharField(max_length=255)),
+                ("address", models.CharField(max_length=255)),
+                ("address2", models.CharField(blank=True, max_length=255, null=True)),
+                ("country", models.CharField(max_length=255)),
+                ("city", models.CharField(max_length=255)),
+                ("postcode", models.CharField(max_length=255)),
+                ("total_price", models.IntegerField()),
             ],
         ),
         migrations.CreateModel(
-            name='OrderItems',
+            name="OrderItems",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity', models.IntegerField()),
-                ('price', models.IntegerField()),
-                ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='items', to='main.order')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='products.product')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("quantity", models.IntegerField()),
+                ("price", models.IntegerField()),
+                (
+                    "order",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="items",
+                        to="main.order",
+                    ),
+                ),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.PROTECT,
+                        to="products.product",
+                    ),
+                ),
             ],
         ),
     ]

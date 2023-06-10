@@ -5,19 +5,23 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('products', '0003_category_slug'),
+        ("products", "0003_category_slug"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='category',
-            name='parent',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, to='products.category'),
+            model_name="category",
+            name="parent",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.PROTECT,
+                to="products.category",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='productimage',
-            unique_together={('product', 'is_main')},
+            name="productimage",
+            unique_together={("product", "is_main")},
         ),
     ]

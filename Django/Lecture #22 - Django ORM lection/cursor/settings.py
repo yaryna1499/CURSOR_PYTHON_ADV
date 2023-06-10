@@ -30,7 +30,6 @@ ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost:1443", "http://0.0.0.0:1443"]
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django_extensions",
     "main",
-    "products"
+    "products",
 ]
 
 MIDDLEWARE = [
@@ -81,13 +80,13 @@ WSGI_APPLICATION = "cursor.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get("DB_NAME"),
-        'USER': os.environ.get("DB_USERNAME"),
-        'PASSWORD': os.environ.get("DB_PASSWORD"),
-        'HOST': os.environ.get("DB_HOST"),   # Or an IP Address that your DB is hosted on
-        'PORT': os.environ.get("DB_PORT"),
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USERNAME"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),  # Or an IP Address that your DB is hosted on
+        "PORT": os.environ.get("DB_PORT"),
     }
 }
 
@@ -129,7 +128,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "/media/"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 
 # Default primary key field type

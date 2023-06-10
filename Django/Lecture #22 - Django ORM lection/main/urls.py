@@ -1,5 +1,15 @@
 from django.urls import path
-from .views import main, add_to_cart, cart, checkout, checkout_proceed, register, sign_in, sign_out
+from .views import (
+    main,
+    add_to_cart,
+    cart,
+    checkout,
+    checkout_proceed,
+    register,
+    sign_in,
+    sign_out,
+    apply_discount_code,
+)
 
 urlpatterns = [
     path("", main),
@@ -10,4 +20,5 @@ urlpatterns = [
     path("cart", cart, name="cart"),
     path("checkout", checkout, name="checkout"),
     path("checkout/procceed", checkout_proceed, name="checkout_proceed"),
+    path("apply_discount_code", apply_discount_code, name="apply_discount_code"),
 ]

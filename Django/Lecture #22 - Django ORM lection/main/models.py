@@ -15,7 +15,6 @@ class SliderItem(models.Model):
     link = models.CharField(max_length=255)
     image = models.ImageField(upload_to="uploads/")
 
-
     def __str__(self):
         return self.title
 
@@ -30,6 +29,11 @@ class Order(models.Model):
     city = models.CharField(max_length=255)
     postcode = models.CharField(max_length=255)
     total_price = models.IntegerField()
+    code = models.CharField(max_length=255, null=True, blank=True)
+
+    def discount_data_entry(self, code):
+        self.code = code
+        self.save()
 
     def __str__(self):
         return str(self.id) + " " + self.address
@@ -43,3 +47,12 @@ class OrderItems(models.Model):
 
     def __str__(self):
         return str(self.order.id) + " " + self.product.title
+
+
+class DiscountCode(models.Model):
+    code = models.CharField(max_length=255, unique=True)
+    discount_perc = models.IntegerField()
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return str(self.discount_perc) + "% " + self.code

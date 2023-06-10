@@ -1,20 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .models import Order, OrderItems, MenuItem, SliderItem
+from .models import Order, OrderItems, MenuItem, SliderItem, DiscountCode
 from .forms import NewUserForm
 from products.models import Product
+from django.http import JsonResponse
 
 
 def main(request):
     products = Product.objects.filter(show_on_main_page=True)
     menu_items = MenuItem.objects.all()
     slider_items = SliderItem.objects.all()
-    return render(request, "index.html", {"menu_items": menu_items,
-                                           "slider_items": slider_items,
-                                           "products": products})
-
+    return render(
+        request,
+        "index.html",
+        {"menu_items": menu_items, "slider_items": slider_items, "products": products},
+    )
 
 
 def add_to_cart(request, product_id: int):
@@ -30,7 +32,9 @@ def add_to_cart(request, product_id: int):
                 is_product_already_exist = True
 
     if not is_product_already_exist:
-        request.session["cart"].append({"id": product_id, "quantity": 1, "price": product_obj.price})
+        request.session["cart"].append(
+            {"id": product_id, "quantity": 1, "price": product_obj.price}
+        )
     request.session.modified = True
     return HttpResponseRedirect("/")
 
@@ -43,6 +47,25 @@ def cart(request):
         product.total_price = cart_item["price"]
         cart_products.append(product)
     return render(request, "cart.html", {"cart_products": cart_products})
+
+
+def apply_discount_code(request):
+    if request.method == "POST":
+        discount_code = request.POST.get("discount_code")
+        try:
+            coupon_obj = DiscountCode.objects.get(code=discount_code, is_active=True)
+            discount_perc = coupon_obj.discount_perc
+            cart = request.session.get("cart", [])
+            for cart_item in cart:
+                cart_item["price"] *= discount_perc / 100
+            request.session["cart"] = cart
+            request.session["applied_coupon"] = coupon_obj.code
+            request.session.modified = True
+
+        except DiscountCode.DoesNotExist:
+            request.session["applied_coupon"] = None
+
+    return redirect("cart")
 
 
 def checkout(request):
@@ -68,6 +91,10 @@ def checkout_proceed(request):
         for item in request.session.get("cart", []):
             total = total + item["price"]
         order.total_price = total
+
+        applied_coupon = request.session.get("applied_coupon")
+        order.discount_data_entry(applied_coupon) if applied_coupon else None
+
         order.save()
         for item in request.session.get("cart", []):
             order_item = OrderItems()
@@ -92,13 +119,16 @@ def register(request):
 
 def sign_in(request):
     if request.method == "POST":
-        user = authenticate(username=request.POST.get("username"), password=request.POST.get("password"))
+        user = authenticate(
+            username=request.POST.get("username"), password=request.POST.get("password")
+        )
         if user:
             login(request, user)
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect("/")
     return render(request, "sign-in.html")
 
 
 def sign_out(request):
     logout(request)
+    request.session.flush()
     return HttpResponseRedirect("/")

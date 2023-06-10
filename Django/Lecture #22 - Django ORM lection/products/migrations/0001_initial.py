@@ -5,32 +5,52 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Product',
+            name="Product",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255)),
-                ('description', models.TextField()),
-                ('price', models.IntegerField()),
-                ('discount_price', models.IntegerField(blank=True, null=True)),
-                ('show_on_main_page', models.BooleanField(default=False)),
-                ('is_active', models.BooleanField(default=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255)),
+                ("description", models.TextField()),
+                ("price", models.IntegerField()),
+                ("discount_price", models.IntegerField(blank=True, null=True)),
+                ("show_on_main_page", models.BooleanField(default=False)),
+                ("is_active", models.BooleanField(default=True)),
             ],
         ),
         migrations.CreateModel(
-            name='ProductImage',
+            name="ProductImage",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('image', models.ImageField(upload_to='uploads/products/')),
-                ('is_main', models.BooleanField(default=False)),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.product')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("image", models.ImageField(upload_to="uploads/products/")),
+                ("is_main", models.BooleanField(default=False)),
+                (
+                    "product",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="products.product",
+                    ),
+                ),
             ],
         ),
     ]
