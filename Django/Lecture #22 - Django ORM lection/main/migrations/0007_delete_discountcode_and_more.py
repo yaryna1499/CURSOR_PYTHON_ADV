@@ -4,17 +4,16 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0006_alter_order_discount_code_applied'),
+        ("main", "0006_alter_order_discount_code_applied"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='DiscountCode',
+            name="DiscountCode",
         ),
         migrations.RemoveField(
-            model_name='order',
-            name='discount_code_applied',
+            model_name="order",
+            name="discount_code_applied",
         ),
     ]

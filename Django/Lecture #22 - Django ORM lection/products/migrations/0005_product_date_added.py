@@ -5,15 +5,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('products', '0004_alter_category_parent_and_more'),
+        ("products", "0004_alter_category_parent_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='product',
-            name='date_added',
-            field=models.DateTimeField(default=datetime.datetime(2023, 6, 2, 9, 57, 17, 534670)),
+            model_name="product",
+            name="date_added",
+            field=models.DateTimeField(
+                default=datetime.datetime(2023, 6, 2, 9, 57, 17, 534670)
+            ),
         ),
     ]

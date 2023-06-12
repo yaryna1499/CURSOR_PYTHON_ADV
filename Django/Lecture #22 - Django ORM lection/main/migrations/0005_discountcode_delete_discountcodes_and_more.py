@@ -4,27 +4,34 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0004_discountcodes'),
+        ("main", "0004_discountcodes"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='DiscountCode',
+            name="DiscountCode",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('code', models.CharField(max_length=255)),
-                ('discount_percent', models.IntegerField()),
-                ('active', models.BooleanField(default=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("code", models.CharField(max_length=255)),
+                ("discount_percent", models.IntegerField()),
+                ("active", models.BooleanField(default=True)),
             ],
         ),
         migrations.DeleteModel(
-            name='DiscountCodes',
+            name="DiscountCodes",
         ),
         migrations.AddField(
-            model_name='order',
-            name='discount_code_applied',
+            model_name="order",
+            name="discount_code_applied",
             field=models.CharField(default=None, max_length=255),
         ),
     ]

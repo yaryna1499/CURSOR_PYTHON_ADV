@@ -4,18 +4,25 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0003_order_orderitems'),
+        ("main", "0003_order_orderitems"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='DiscountCodes',
+            name="DiscountCodes",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('code', models.CharField(max_length=255)),
-                ('discount_percent', models.IntegerField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("code", models.CharField(max_length=255)),
+                ("discount_percent", models.IntegerField()),
             ],
         ),
     ]
