@@ -45,6 +45,17 @@ services:
       - app
 
 
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    depends_on:
+      - app
+    networks:
+      - app
+
+
+
 networks:
   app:
     driver: bridge
