@@ -1,6 +1,5 @@
-from django.shortcuts import render
-from .models import Category, Product, ProductImage
-
+from django.shortcuts import render, HttpResponseRedirect, redirect
+from .models import Category, Product, Comment
 
 from django.db.models import Q
 
@@ -26,4 +25,21 @@ def category_page(request, slug):
 
 def product_page(request, id):
     product = Product.objects.get(id=id)
-    return render(request, "product_page.html", {"product": product})
+    comments = Comment.objects.filter(parent_id=None).filter(product_id=product.id)
+    return render(request, "product_page.html", {"product": product, "comments": comments})
+
+
+
+
+def add_comment(request, product_id):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            comment = Comment()
+            comment.user = request.user
+            comment.product_id = product_id
+            comment.text = request.POST.get("comment-text")
+            if request.POST.get("parent", False):
+                comment.parent_id = int(request.POST.get("parent"))
+            comment.save()
+            return redirect("product_page", id=str(product_id))
+    return HttpResponseRedirect("/")

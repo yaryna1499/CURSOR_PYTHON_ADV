@@ -51,3 +51,10 @@ async def post_event_on_telegram():
         )
         os.remove(image)
         latest_data = data
+
+
+
+
+
+
+

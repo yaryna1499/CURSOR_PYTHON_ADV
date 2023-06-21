@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Q
 from django import utils
+from django.contrib.auth.models import User
 
 
 class Product(models.Model):
@@ -52,3 +53,17 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="comments")
+    parent = models.ForeignKey("Comment", default=None, null=True, on_delete=models.CASCADE, related_name="childs")
+    text = models.TextField()
+
+    @property
+    def child_comments(self):
+        return self.childs.all()
+
+    def __str__(self):
+        return self.text
